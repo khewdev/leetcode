@@ -1,7 +1,7 @@
 func twoSum(nums []int, target int) []int {
     hm := make(map[int]int)
     
-    for i, iValue := range (nums) {
+    for i, iValue := range(nums) {
         complement := target - iValue
         _, jValue := hm[complement]
         
@@ -12,5 +12,5 @@ func twoSum(nums []int, target int) []int {
         hm[iValue] = i
     }
     
-    return nil;
+    return nil
 }
