@@ -1,26 +1,29 @@
-func Max(x, y int) int {
-    if x < y {
-        return y
-    }
-    return x
+type Area struct {
+	Area int
+	L    int
+	R    int
 }
 
 func maxArea(height []int) int {
-    size := len(height)
-    
-    var maxArea int = 0
-    var aPtr int
-    var bPtr int = size - 1
-    
-    for aPtr < bPtr {
-        if(height[aPtr] < height[bPtr]) {
-            maxArea = Max(maxArea, height[aPtr] * (bPtr - aPtr))
-            aPtr++
-        } else {
-            maxArea = Max(maxArea, height[bPtr] * (bPtr - aPtr))
-            bPtr--
-        }
-    }
-    
-    return maxArea
+
+	a := new(Area)
+	a.R = len(height) - 1
+
+	for a.L < a.R {
+		if height[a.L] < height[a.R] {
+			a.setArea(height[a.L])
+			a.L++
+		} else {
+			a.setArea(height[a.R])
+			a.R--
+		}
+	}
+
+	return a.Area
+}
+
+func (a *Area) setArea(h int) {
+	if a.Area < h*(a.R-a.L) {
+		a.Area = h * (a.R - a.L)
+	}
 }
