@@ -16,7 +16,7 @@ func validate(root *TreeNode, left, right int) bool {
         return true
     }
     
-    if root.Val >= right || root.Val <= left {
+    if !(root.Val < right && root.Val > left) {
         return false
     }
     
