@@ -7,7 +7,7 @@
  * }
  */
 func levelOrder(root *TreeNode) [][]int {
-    	if root == nil {
+    if root == nil {
 		return [][]int{}
 	}
 	queue := []*TreeNode{root}
