@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 type LRUCache struct {
-	Head *Node
-	Tail *Node
+	Right *Node
+	Left *Node
 	Map  map[int]*Node
 	Cap  int
 }
@@ -39,8 +39,8 @@ func (this *LRUCache) Put(key int, value int) {
 		this.Add(node)
 	} else {
 		if len(this.Map) == this.Cap {
-			delete(this.Map, this.Tail.Key)
-			this.Remove(this.Tail)
+			delete(this.Map, this.Left.Key)
+			this.Remove(this.Left)
 		}
 		node = &Node{Key: key, Val: value}
 		this.Map[key] = node
@@ -50,14 +50,14 @@ func (this *LRUCache) Put(key int, value int) {
 
 func (this *LRUCache) Add(node *Node) {
     node.Prev = nil
-    node.Next = this.Head
+    node.Next = this.Right
     
-    if this.Head != nil {
-        this.Head.Prev = node
+    if this.Right != nil {
+        this.Right.Prev = node
     }
-    this.Head = node
-    if this.Tail == nil {
-        this.Tail = node
+    this.Right = node
+    if this.Left == nil {
+        this.Left = node
     }
     
 // 	headNext := node.Next
@@ -77,15 +77,15 @@ func (this *LRUCache) Remove(node *Node) {
 // 	nextNode.Prev = prevNode
 // 	nextNode.Next = nextNode
     
-    if node != this.Head {
+    if node != this.Right {
         node.Prev.Next = node.Next
     } else {
-        this.Head = node.Next
+        this.Right = node.Next
     }
-    if node != this.Tail {
+    if node != this.Left {
         node.Next.Prev = node.Prev
     } else {
-        this.Tail = node.Prev
+        this.Left = node.Prev
     }
 }
 
