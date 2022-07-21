@@ -1,52 +1,47 @@
 func topKFrequent(nums []int, k int) []int {
-	m := make(map[int]int)
+	seen := make(map[int]int)
 	for _, n := range nums {
-		m[n]++
+		seen[n]++
 	}
-	q := PriorityQueue{}
-	for key, count := range m {
-		heap.Push(&q, &Item{key: key, count: count})
+
+	q := &priorityQueue{}
+	heap.Init(q)
+	for val, cnt := range seen {
+		heap.Push(q, element{value: val, count: cnt})
+		if q.Len() > k {
+			heap.Pop(q)
+		}
 	}
-	var result []int
-	for len(result) < k {
-		item := heap.Pop(&q).(*Item)
-		result = append(result, item.key)
+
+	ans := make([]int, k, k)
+	for i := 1; i <= k; i++ {
+		v := heap.Pop(q)
+		if s, ok := v.(element); ok {
+			ans[k-i] = s.value
+		}
 	}
-	return result
+	return ans
 }
 
-// Item define
-type Item struct {
-	key   int
+type element struct {
+	value int
 	count int
 }
 
-// A PriorityQueue implements heap.Interface and holds Items.
-type PriorityQueue []*Item
+type priorityQueue []element
 
-func (pq PriorityQueue) Len() int {
-	return len(pq)
+func (q priorityQueue) Len() int           { return len(q) }
+func (q priorityQueue) Less(i, j int) bool { return q[i].count < q[j].count }
+func (q priorityQueue) Swap(i, j int)      { q[i], q[j] = q[j], q[i] }
+
+func (q *priorityQueue) Push(x interface{}) {
+	*q = append(*q, x.(element))
 }
 
-func (pq PriorityQueue) Less(i, j int) bool {
-	// 注意：因为 golang 中的 heap 默认是按最小堆组织的，所以 count 越大，Less() 越小，越靠近堆顶。这里采用 >，变为最大堆
-	return pq[i].count > pq[j].count
-}
-
-func (pq PriorityQueue) Swap(i, j int) {
-	pq[i], pq[j] = pq[j], pq[i]
-}
-
-// Push define
-func (pq *PriorityQueue) Push(x interface{}) {
-	item := x.(*Item)
-	*pq = append(*pq, item)
-}
-
-// Pop define
-func (pq *PriorityQueue) Pop() interface{} {
-	n := len(*pq)
-	item := (*pq)[n-1]
-	*pq = (*pq)[:n-1]
-	return item
+func (q *priorityQueue) Pop() interface{} {
+	old := *q
+	n := len(old)
+	x := old[n-1]
+	*q = old[0 : n-1]
+	return x
 }
