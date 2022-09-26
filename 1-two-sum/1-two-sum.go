@@ -3,6 +3,7 @@ func twoSum(nums []int, target int) []int {
     
     for i, iValue := range(nums) {
         complement := target - iValue
+        
         _, jValue := hm[complement]
         
         if jValue {
