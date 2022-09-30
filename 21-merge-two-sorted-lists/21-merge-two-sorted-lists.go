@@ -8,23 +8,23 @@
 
 func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
     var resultNode = new(ListNode)
-    var temp = resultNode
+    var tempNode = resultNode
     
     for l1 != nil && l2 != nil {
-        if(l1.Val < l2.Val) {
-            temp.Next = l1
+        if l1.Val < l2.Val {
+            tempNode.Next = l1
             l1 = l1.Next
         } else {
-            temp.Next = l2
+            tempNode.Next = l2
             l2 = l2.Next
         }
-        temp = temp.Next
+        tempNode = tempNode.Next
     }
     
     if l1 != nil {
-        temp.Next = l1
+        tempNode.Next = l1
     } else {
-        temp.Next = l2
+        tempNode.Next = l2
     }
     
     return resultNode.Next
