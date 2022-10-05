@@ -1,19 +1,26 @@
-import "math"
+func Max(x, y int) int {
+    if x < y {
+        return y
+    }
+    return x
+}
 
 func maxArea(height []int) int {
-    res := 0
-    l, r := 0, len(height) - 1
+    size := len(height)
     
-    for l < r {
-        area := (r - l) * int(math.Min(float64(height[l]), float64(height[r])))
-        res = int(math.Max(float64(res), float64(area)))
-        
-        if height[l] < height[r] {
-            l += 1
+    var maxArea int = 0
+    var aPtr int
+    var bPtr int = size - 1
+    
+    for aPtr < bPtr {
+        if(height[aPtr] < height[bPtr]) {
+            maxArea = Max(maxArea, height[aPtr] * (bPtr - aPtr))
+            aPtr++
         } else {
-            r -= 1
+            maxArea = Max(maxArea, height[bPtr] * (bPtr - aPtr))
+            bPtr--
         }
     }
     
-    return res
+    return maxArea
 }
