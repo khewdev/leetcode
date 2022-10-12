@@ -11,7 +11,7 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
     left := dummy
     right := head
     
-    for n > 0 && right != nil {
+    for n > 0 {
         right = right.Next
         n--
     }
