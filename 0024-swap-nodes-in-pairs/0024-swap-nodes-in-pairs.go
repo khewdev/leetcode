@@ -7,8 +7,7 @@
  */
 func swapPairs(head *ListNode) *ListNode {
     result := &ListNode{0, head}
-    prev := result
-    curr := head
+    prev, curr := result, head
     
     for curr != nil && curr.Next != nil {
         nextPair := curr.Next.Next
