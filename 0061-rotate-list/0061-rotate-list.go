@@ -13,8 +13,8 @@ func rotateRight(head *ListNode, k int) *ListNode {
     length, tail := 1, head
     
     for tail.Next != nil {
-        tail = tail.Next
         length++
+        tail = tail.Next
     }
     
     k = k % length
