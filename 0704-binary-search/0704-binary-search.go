@@ -3,10 +3,10 @@ func search(nums []int, target int) int {
     maxIndex := len(nums) - 1
     
     for minIndex <= maxIndex {
-        midIndex := (maxIndex + minIndex) / 2
+        midIndex := (minIndex + maxIndex) / 2
         midItem := nums[midIndex]
         
-        if target == midItem {
+        if midItem == target {
             return midIndex
         }
         
