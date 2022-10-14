@@ -1,48 +1,52 @@
+import "reflect"
+
 func findAnagrams(s string, p string) []int {
-	var res []int
+	result := []int{}
+	pCount := map[int]int{}
+	sCount := map[int]int{}
+	l := 0
 
-	if len(s) < len(p) {
-		return res
+	if len(p) > len(s) {
+		return result
 	}
 
-	m := make(map[byte]int)
-	sMap := make(map[byte]int)
+	for i := range p {
+		_, pExist := pCount[int(p[i])]
+		if pExist {
+			pCount[int(p[i])] = 1 + pCount[int(p[i])]
+        } else {
+            pCount[int(p[i])] = 1
+        }
 
-	for i := 0; i < len(p); i++ {
-		m[p[i]]++
+		_, sExist := sCount[int(s[i])]
+		if sExist {
+			sCount[int(s[i])] = 1 + sCount[int(s[i])]
+        } else {
+            sCount[int(s[i])] = 1
+        }
 	}
 
-	for i := 0; i < len(s); i++ {
-		if i-len(p) >= 0 {
-			sMap[s[i-len(p)]]--
+	if reflect.DeepEqual(pCount, sCount) {
+		result = append(result, 0)
+	}
 
-			if sMap[s[i-len(p)]] == 0 {
-				delete(sMap, s[i-len(p)])
-			}
+	for r := len(p); r < len(s); r++ {
+		_, sExist := sCount[int(s[r])]
+		if sExist {
+			sCount[int(s[r])] = 1 + sCount[int(s[r])]
+        } else {
+            sCount[int(s[r])] = 1
+        }
+		sCount[int(s[l])] = sCount[int(s[l])] - 1
+
+		if sCount[int(s[l])] == 0 {
+			delete(sCount, int(s[l]))
 		}
-
-		sMap[s[i]]++
-
-			if len(m) == len(sMap) {
-				isTheSame := true
-
-				for key, val := range m {
-					if v, ok := sMap[key]; !ok {
-						isTheSame = false
-						break
-					} else {
-						if v != val {
-							isTheSame = false
-							break
-						}
-					}
-				}
-
-				if isTheSame {
-					res = append(res, i+1-len(p))
-				}
-			}
+		l++
+		if reflect.DeepEqual(pCount, sCount) {
+			result = append(result, l)
+		}
 	}
 
-	return res
+	return result
 }
