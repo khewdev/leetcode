@@ -4,6 +4,7 @@ func max(x int, y int) int {
     }
     return y
 }
+
 func maxSubArray(nums []int) int {
     maxSub := nums[0]
     curSum := 0
