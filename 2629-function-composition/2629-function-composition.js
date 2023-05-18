@@ -3,11 +3,14 @@
  * @return {Function}
  */
 var compose = function(functions) {
+    const fn = (acc, f) => f(acc);
 	return function(x) {
-        for (const fn of functions.reverse()) {
-            x = fn(x);
-        }
-        return x;
+        // for (const fn of functions.reverse()) {
+        //     x = fn(x);
+        // }
+        // return x;
+        
+        return functions.reduceRight(fn, x);
     }
 };
 
