@@ -3,20 +3,18 @@ func isAnagram(s string, t string) bool {
         return false
     } 
     
-    alphabet := make([]int, 26)
-    sBytes := []byte(s)
-    tBytes := []byte(t)
+    hash := map[rune]int{}
     
-    for i := 0; i < len(sBytes); i++ {
-        alphabet[sBytes[i] - 'a']++
+    for _, value := range s {
+        hash[value]++
     }
     
-    for i := 0; i < len(tBytes); i++ {
-        alphabet[tBytes[i] - 'a']--
+    for _, value := range t {
+        hash[value]--
     }
     
-    for i := 0; i < len(alphabet); i++ {
-        if alphabet[i] != 0 {
+    for _, value := range hash {
+        if value != 0 {
             return false
         }
     }
