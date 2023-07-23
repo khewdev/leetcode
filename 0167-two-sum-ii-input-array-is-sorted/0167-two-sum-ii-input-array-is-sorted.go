@@ -6,6 +6,11 @@ func twoSum(nums []int, target int) []int {
     l, r := 0, len(nums) - 1
     
     for l < r {
+        if target > 0 && nums[r] > target {
+            r-=1
+            continue
+        }
+
         curSum := nums[l] + nums[r]
         
         if curSum < target {
