@@ -3,19 +3,21 @@ func twoSum(nums []int, target int) []int {
         return nil
     }
     
-    hashMap := make(map[int]int)
+    l, r := 0, len(nums) - 1
     
-    for i, v := range nums {
-        complement := target - v
+    for l < r {
+        curSum := nums[l] + nums[r]
         
-        _, found := hashMap[complement]
-        
-        if found {
-            return []int{hashMap[complement], i+1}
+        if curSum < target {
+            l+=1
+        } else if curSum > target {
+            r-=1
+        } else {
+            return []int{l + 1, r + 1}
         }
         
-        hashMap[v] = i+1
+        
     }
-    
+            
     return nil
 }
