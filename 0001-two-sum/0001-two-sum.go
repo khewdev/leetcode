@@ -5,15 +5,16 @@ func twoSum(nums []int, target int) []int {
     
     hashMap := make(map[int]int)
     
-    for i, num := range nums {
-        complement := target - num
+    for i, v := range nums {
+        complement := target - v
         
-        _, found := hashMap[complement] 
+        _, found := hashMap[complement]
+        
         if found {
             return []int{i, hashMap[complement]}
         }
         
-        hashMap[num] = i
+        hashMap[v] = i
     }
     
     return nil
