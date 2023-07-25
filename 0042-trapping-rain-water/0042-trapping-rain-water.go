@@ -1,4 +1,9 @@
-import "math"
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
 
 func trap(height []int) int {
     if height == nil {
@@ -12,11 +17,11 @@ func trap(height []int) int {
     for l < r {
         if leftMax < rightMax {
             l++
-            leftMax = int(math.Max(float64(leftMax), float64(height[l])))
+            leftMax = max(leftMax, height[l])
             res += leftMax - height[l]
         } else {
             r--
-            rightMax = int(math.Max(float64(rightMax), float64(height[r])))
+            rightMax = max(rightMax, height[r])
             res += rightMax - height[r]
         }
     }
