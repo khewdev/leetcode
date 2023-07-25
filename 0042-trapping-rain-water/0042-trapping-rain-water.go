@@ -21,6 +21,5 @@ func trap(height []int) int {
         }
     }
     
-    return res
-    
+    return res   
 }
