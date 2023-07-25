@@ -1,20 +1,20 @@
-import "math"
-
 func maxArea(height []int) int {
-    l, r := 0, len(height) - 1
-    res := 0
-    
-    for l < r {
-        area := (r - l) * int(math.Min(float64(height[l]), float64(height[r])))
-        
-        res = int(math.Max(float64(res), float64(area)))
-        
-        if height[l] < height[r] {
-            l++
+    start := 0
+    end := len(height) - 1
+    maxArea := 0
+    for start < end {
+        currArea := end - start
+        if height[start] < height[end] {
+            currArea *= height[start]
+            start++
         } else {
-            r--
+            currArea *= height[end]
+            end--
+        }
+        if maxArea < currArea {
+            maxArea = currArea
         }
     }
     
-    return res
+    return maxArea
 }
