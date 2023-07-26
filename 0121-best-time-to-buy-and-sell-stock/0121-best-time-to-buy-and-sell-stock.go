@@ -1,22 +1,15 @@
-func max(a int, b int) int {
-    if a > b {
-        return a
-    } 
-    return b
-}
-
 func maxProfit(prices []int) int {
-    l, r := 0, 1
-    res := 0
-    
-    for r < len(prices) {
-        if prices[l] < prices[r] {
-            res = max(res, prices[r] - prices[l])
-        } else {
-            l = r
-        }
-        r++
-    }
-    
-    return res
+	if len(prices) < 1 {
+		return 0
+	}
+	min, maxProfit := prices[0], 0
+	for i := 1; i < len(prices); i++ {
+		if prices[i]-min > maxProfit {
+			maxProfit = prices[i] - min
+		}
+		if prices[i] < min {
+			min = prices[i]
+		}
+	}
+	return maxProfit
 }
